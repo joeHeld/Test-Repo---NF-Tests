@@ -95,4 +95,20 @@ public void testValidRangeMessage() throws Exception {
     assertTrue(output.contains("Range 65 - 72 is set till you decide to reset"));
     }
 
+   @Test
+public void testCommandExecutesUnderTwoSeconds() throws Exception {
+    long startTime = System.currentTimeMillis();
+
+    // INPUT:
+    // User sets a valid temperature range
+    String output = runMyThermo("-rmin", "70", "-rmax", "72");
+    long endTime = System.currentTimeMillis();
+    long duration = endTime - startTime;
+
+    // EXPECTED RESULT:
+    // Should complete in under 2000 ms (2 seconds)
+    assertTrue("Program took too long to execute: " + duration + " ms", duration < 2000);
+
+    assertTrue(output.contains("Range"), "Program should respond quickly and correctly.");
+
 }
